@@ -14,7 +14,7 @@ export default function Hero() {
         <div className="mb-8 animate-fadeIn">
           <div className="relative w-36 h-36 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-blue-500 to-blue-700 p-[3px]">
             <img
-              src="/images/profile.jpg"
+              src="/profile.jpg"
               alt="Sai Bharadwaj Adepu"
               className="w-full h-full object-cover object-top rounded-full"
             />
