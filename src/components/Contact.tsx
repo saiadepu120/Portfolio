@@ -2,45 +2,37 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Linkedin, Github, Send } from 'lucide-react';
 
 export default function Contact() {
-  // State for form fields and status display
-  // useState for form and status
-    const [form, setForm] = useState({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [status, setStatus] = useState('');
 
-    const [status, setStatus] = useState('');
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.id]: e.target.value });
+  };
 
-    // Handle input change
-    // Handle input change with explicit types for input and textarea
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setForm({ ...form, [e.target.id]: e.target.value });
-    };
-
-    // Handle form submission with typed form event
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setStatus('Sending...');
-      try {
-        const res = await fetch('/api/sendMail', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
-        });
-        if (res.ok) {
-          setStatus('Message sent!');
-          setForm({ name: '', email: '', subject: '', message: '' });
-        } else {
-          setStatus('Error sending message.');
-        }
-      } catch {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('Sending...');
+    try {
+      const res = await fetch('/api/sendMail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setStatus('Message sent!');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
         setStatus('Error sending message.');
       }
-    };
-
-
+    } catch {
+      setStatus('Error sending message.');
+    }
+  };
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
@@ -54,40 +46,47 @@ export default function Contact() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          {/* Left card */}
+          <div className="bg-white rounded-xl shadow-lg p-8 overflow-hidden min-h-0">
             <h3 className="text-2xl font-bold text-slate-800 mb-6">Contact Information</h3>
             <div className="space-y-6">
               <a
                 href="mailto:saibharadwaj980@gmail.com"
                 className="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 transition-colors"
               >
-                <div className="bg-blue-100 p-3 rounded-lg">
+                <div className="bg-blue-100 p-3 rounded-lg flex-shrink-0">
                   <Mail className="w-6 h-6 text-blue-600" />
                 </div>
-                <div>
+
+                {/* IMPORTANT: allow this text container to shrink on small screens */}
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-800">Email</div>
-                  <div className="text-slate-600">saibharadwaj980@gmail.com</div>
+                  <div className="text-slate-600 break-words">saibharadwaj980@gmail.com</div>
                 </div>
               </a>
+
               <a
                 href="tel:+917729034411"
                 className="flex items-start gap-4 p-4 rounded-lg hover:bg-slate-50 transition-colors"
               >
-                <div className="bg-blue-100 p-3 rounded-lg">
+                <div className="bg-blue-100 p-3 rounded-lg flex-shrink-0">
                   <Phone className="w-6 h-6 text-blue-600" />
                 </div>
-                <div>
+
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-800">Phone</div>
-                  <div className="text-slate-600">+91 7729034411</div>
+                  <div className="text-slate-600 break-words">+91 7729034411</div>
                 </div>
               </a>
+
               <div className="flex items-start gap-4 p-4 rounded-lg">
-                <div className="bg-blue-100 p-3 rounded-lg">
+                <div className="bg-blue-100 p-3 rounded-lg flex-shrink-0">
                   <MapPin className="w-6 h-6 text-blue-600" />
                 </div>
-                <div>
+
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-800">Location</div>
-                  <div className="text-slate-600">Hyderabad, Telangana - 500014, India</div>
+                  <div className="text-slate-600 break-words">Hyderabad, Telangana - 500014, India</div>
                 </div>
               </div>
             </div>
@@ -115,7 +114,8 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          {/* Right card (form) */}
+          <div className="bg-white rounded-xl shadow-lg p-8 overflow-hidden min-h-0">
             <h3 className="text-2xl font-bold text-slate-800 mb-6">Send a Message</h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
@@ -184,6 +184,7 @@ export default function Contact() {
             </form>
           </div>
         </div>
+
         <div className="text-center py-8 border-t border-slate-200">
           <p className="text-slate-500 mt-2">
             © 2025 Sai Bharadwaj Adepu. All rights reserved.
