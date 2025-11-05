@@ -3,39 +3,44 @@ import { Mail, Phone, MapPin, Linkedin, Github, Send } from 'lucide-react';
 
 export default function Contact() {
   // State for form fields and status display
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-  const [status, setStatus] = useState('');
+  // useState for form and status
+    const [form, setForm] = useState({
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    });
 
-  // Handle input change for all fields
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
-  };
+    const [status, setStatus] = useState('');
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('Sending...');
-    try {
-      const res = await fetch('/api/sendMail', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus('Message sent!');
-        setForm({ name: '', email: '', subject: '', message: '' });
-      } else {
+    // Handle input change
+    // Handle input change with explicit types for input and textarea
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm({ ...form, [e.target.id]: e.target.value });
+    };
+
+    // Handle form submission with typed form event
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setStatus('Sending...');
+      try {
+        const res = await fetch('/api/sendMail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(form),
+        });
+        if (res.ok) {
+          setStatus('Message sent!');
+          setForm({ name: '', email: '', subject: '', message: '' });
+        } else {
+          setStatus('Error sending message.');
+        }
+      } catch {
         setStatus('Error sending message.');
       }
-    } catch {
-      setStatus('Error sending message.');
-    }
-  };
+    };
+
+
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
