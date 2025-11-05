@@ -12,8 +12,12 @@ export default function Hero() {
     <section id="home" className="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-8 animate-fadeIn">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
-            SA
+          <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-100">
+            <img
+              src="/images/profile-1.jpg"  // 👈 place your image in public/images/profile.jpg
+              alt="Sai Bharadwaj Adepu"
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <h1 className="text-5xl sm:text-6xl font-bold text-slate-800 mb-4">
