@@ -5,7 +5,7 @@ export default function About() {
     {
       icon: <Smartphone className="w-8 h-8" />,
       title: 'Mobile Development',
-      description: 'Cross-platform iOS & Android apps with Flutter & Dart',
+      description: 'Cross-platform iOS & Android apps with Flutter & Native Java',
     },
     {
       icon: <Code2 className="w-8 h-8" />,
